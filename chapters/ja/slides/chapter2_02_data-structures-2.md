@@ -20,7 +20,7 @@ nlp = English()
 from spacy.tokens import Doc
 
 # Docクラスのもととなるwordsとspacesを作成
-words = ["Hello", "world", "!"]
+words = ["こんにちは", "世界", "！"]
 spaces = [True, False, False]
 
 # docを手動で作る
@@ -57,7 +57,7 @@ Notes: `Span`は1個以上のトークンからなる、docのスライスです
 from spacy.tokens import Doc, Span
 
 # Docクラスのもととなるwordsとspacesを作成
-words = ["Hello", "world", "!"]
+words = ["こんにちは", "世界", "！"]
 spaces = [True, False, False]
 
 # docを手動で作成
@@ -67,7 +67,7 @@ doc = Doc(nlp.vocab, words=words, spaces=spaces)
 span = Span(doc, 0, 2)
 
 # ラベルがついたスパンを作成
-span_with_label = Span(doc, 0, 2, label="GREETING")
+span_with_label = Span(doc, 0, 2, label="挨拶")
 
 # spanをdoc.entsに加える
 doc.ents = [span_with_label]
@@ -84,7 +84,7 @@ Notes: `Span`オブジェクトを手動で作るために、`spacy.tokens`か�
 
 - `Doc`と`Span`はとても強力で、単語間や文間の参照や関係性を持っています
   - **結果を文字列として出力するのは、なるべく後の方にしましょう**
-  - **トークン属性を使える場合は、それを使いましょう。**例えば、`token.i`をトークンのインデックスとして使いましょう
+  - **トークン属性を使える場合は、それを使いましょう。**　例えば、`token.i`をトークンのインデックスとして使いましょう
 - 忘れずに共有の`vocab`を渡すようにしましょう
 
 Notes: 演習を始める前に、いくつかのトリックを紹介します。
