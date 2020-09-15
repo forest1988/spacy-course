@@ -17,11 +17,11 @@ Notes: Welcome back！さて、いくつかのspaCyのオブジェクトを扱�
 - String store: 双方向ルックアップテーブル
 
 ```python
-coffee_hash = nlp.vocab.strings["coffee"]
+coffee_hash = nlp.vocab.strings["コーヒー"]
 coffee_string = nlp.vocab.strings[coffee_hash]
 ```
 
-- ハッシュ値は復号できません。これが、共有語彙データクラスをつかう理由です。
+- ハッシュ値は復号できません。これが、共有語彙データクラスをつかう理由です
 
 ```python
 # 対応する文字列をみたことがない場合、エラーとなります
@@ -51,21 +51,21 @@ Notes: spaCyは全てのデータをVocabという語彙データベースに保
 - `nlp.vocab.strings`で文字列をハッシュをルックアップしてみます
 
 ```python
-doc = nlp("I love coffee")
-print("hash value:", nlp.vocab.strings["coffee"])
+doc = nlp("私はコーヒーが大好きです")
+print("hash value:", nlp.vocab.strings["コーヒー"])
 print("string value:", nlp.vocab.strings[3197928453018144401])
 ```
 
 ```out
 hash value: 3197928453018144401
-string value: coffee
+string value: コーヒー
 ```
 
 - `doc`からも語彙データと文字列ストアにアクセスできます
 
 ```python
-doc = nlp("I love coffee")
-print("hash value:", doc.vocab.strings["coffee"])
+doc = nlp("私はコーヒーが大好きです")
+print("hash value:", doc.vocab.strings["コーヒー"])
 ```
 
 ```out
@@ -85,15 +85,15 @@ Notes: 文字列のハッシュを得るためには、`nlp.vocab.strings`をル
 - `Lexeme`オブジェクトは語彙データの要素（語彙素）
 
 ```python
-doc = nlp("I love coffee")
-lexeme = nlp.vocab["coffee"]
+doc = nlp("私はコーヒーが大好きです")
+lexeme = nlp.vocab["コーヒー"]
 
 # 語彙属性をプリント
 print(lexeme.text, lexeme.orth, lexeme.is_alpha)
 ```
 
 ```out
-coffee 3197928453018144401 True
+コーヒー 3197928453018144401 True
 ```
 
 - 単語についての**文脈に依存しない**情報を保存
@@ -116,11 +116,11 @@ Notes: Lexemeは文脈に依存しない語彙データベースの要素（語�
 
 # Vocabとハッシュ値と語彙素
 
-<img src="/vocab_stringstore.png" width="70%" alt="Doc、Vocab、StringStoreにおける'I'と'love'と'coffee'の図解" />
+<img src="/vocab_stringstore.png" width="70%" alt="Doc、Vocab、StringStoreにおける'私'と'コーヒー'と'大好き'の図解" />
 
 Notes: 一例を示します。
 
-`Doc`は文脈とともに単語を持っています。ここでは、「I」と「love」と「coffee」を品詞タグと依存関係ラベルとともに持っています。
+`Doc`は文脈とともに単語を持っています。ここでは、「私」と「コーヒー」と「大好き」を品詞タグと依存関係ラベルとともに持っています。
 
 それぞれのトークンは、単語のハッシュ値を持つ語彙素を参照しています。
 ハッシュ値から文字列を得るために、spaCyは文字列ストアを用います。
