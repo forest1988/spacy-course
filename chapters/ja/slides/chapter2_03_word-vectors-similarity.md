@@ -15,18 +15,18 @@ Notes: このレッスンではspaCyを使って、文章やスパン、トー�
 - `spaCy`を使うと、2つのオブジェクトを比較、類似度を予測することができます
 - `Doc.similarity()`、`Span.similarity()`、`Token.similarity()`
 - 他のオブジェクトに対して、類似度（0~1）を返します
-- **重要：**単語ベクトルが含まれているモデルが必要です。例：
+- **重要：** 単語ベクトルが含まれているモデルが必要です。例：
   - ✅ `en_core_web_md` （中サイズモデル）
   - ✅ `en_core_web_lg` （大サイズモデル）
   - 🚫 `en_core_web_sm`は非対応（小サイズモデル）
 
 Notes: spaCyを使うと、2つのオブジェクトを比較し、類似度を予測できます。例えば、doc、span、tokenなどです。
 
-`Doc`と`Token`と`Span`の`.similarity`メソッドは、他のオブジェクトを引数にとり、類似度を示す0以上1以下の小数点数を返します。
+`Doc`と`Token`と`Span`の`.similarity`メソッドは、他のオブジェクトを引数にとり、類似度を示す0以上1以下の浮動小数点数を返します。
 
 重要：類似度を取得するには、単語ベクトルが入っている大きなモデルを使用する必要があります。
 
-例えば、中もしくは大サイズの英語モデルです。小サイズのものは対応していません。
+例えば、中もしくは大サイズの日本語モデルです。小サイズのものは対応していません。
 なので、もし単語ベクトルを使いたいときは、名前が「md」もしくは「lg」で終わっているモデルを使ってください。
 詳細はこちらをご覧ください：[models documentation](https://spacy.io/models)。
 
@@ -39,8 +39,8 @@ Notes: spaCyを使うと、2つのオブジェクトを比較し、類似度を�
 nlp = spacy.load("en_core_web_md")
 
 # 2つのdocを比較
-doc1 = nlp("I like fast food")
-doc2 = nlp("I like pizza")
+doc1 = nlp("私はファーストフードが好きです")
+doc2 = nlp("私はピザが好きです")
 print(doc1.similarity(doc2))
 ```
 
@@ -50,7 +50,7 @@ print(doc1.similarity(doc2))
 
 ```python
 # 2つのトークンを比較
-doc = nlp("I like pizza and pasta")
+doc = nlp("私はピザとパスタが好きです")
 token1 = doc[2]
 token2 = doc[4]
 print(token1.similarity(token2))
@@ -80,8 +80,8 @@ Notes: 例を見てみます。2つのdocが似ているかどうかを調べた
 
 ```python
 # docとtokenを比較
-doc = nlp("I like pizza")
-token = nlp("soap")[0]
+doc = nlp("私はピザが好きです")
+token = nlp("石けん")[0]
 
 print(doc.similarity(token))
 ```
@@ -92,8 +92,8 @@ print(doc.similarity(token))
 
 ```python
 # spanとdocを比較
-span = nlp("I like pizza and pasta")[2:5]
-doc = nlp("McDonalds sells burgers")
+span = nlp("私はピザとパスタが好きです")[2:5]
+doc = nlp("マクドナルドはハンバーガーを売っています")
 
 print(span.similarity(doc))
 ```
@@ -108,7 +108,7 @@ Notes: `similarity`メソッドは、異なるオブジェクトに対しても�
 
 ここでは、類似度はかなり低く、2つのオブジェクトはあまり似ていないと考えられます。
 
-この例は、「pizza and pasta」というスパンと、マクドナルドに関するdocを比較しています。
+この例は、「ピザとパスタ」というスパンと、マクドナルドに関するdocを比較しています。
 
 類似度は0.61となっており、似たようなものであると考えられます。
 
@@ -146,7 +146,7 @@ Word2Vecというアルゴリズムを聞いたことがあるかもしれませ
 # 単語ベクトルの入っている大きなモデルをロード
 nlp = spacy.load("en_core_web_md")
 
-doc = nlp("I have a banana")
+doc = nlp("私はバナナを持っています")
 # token.vector属性によって単語ベクトルを取得
 print(doc[3].vector)
 ```
@@ -172,7 +172,7 @@ Notes: これらのベクトルがどのようなものであるかのイメー�
 
 次に、テキストを処理し、`.vector`属性によってトークンのベクトルを取得します。
 
-結果として、「banana」を表す300次元のベクトルが出力されます。
+結果として、「バナナ」を表す300次元のベクトルが出力されます。
 
 ---
 
@@ -183,8 +183,8 @@ Notes: これらのベクトルがどのようなものであるかのイメー�
 - アプリケーションのコンテキストや、目的に依存します
 
 ```python
-doc1 = nlp("I like cats")
-doc2 = nlp("I hate cats")
+doc1 = nlp("私はネコが好きです")
+doc2 = nlp("私はネコが嫌いです")
 
 print(doc1.similarity(doc2))
 ```
@@ -200,7 +200,7 @@ Notes: 類似度の予測は、多くのアプリケーションに用いるこ�
 しかし、何が似ていて何が似ていないかという客観的な定義は存在しないことを心に留めておいてください。
 これはコンテキストと、アプリケーションの目的に依存します。
 
-これが一例です。spaCyのデフォルトの単語ベクトルは、「I like cats」と「I hate cats」の類似度が非常に高いと予測します。
+これが一例です。spaCyのデフォルトの単語ベクトルは、「私はネコが好きです」と「私はネコが嫌いです」の類似度が非常に高いと予測します。
 これらの文は両方とも、猫に関する感情について表しているので、結果は理にかなっています。
 しかし、これらの文は正反対の感情を述べているので、別のアプリケーションで用いる際は「全く似ていない」という予測結果が欲しくなるかもしれません。
 
