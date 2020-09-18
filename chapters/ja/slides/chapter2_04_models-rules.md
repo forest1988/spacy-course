@@ -49,15 +49,15 @@ from spacy.matcher import Matcher
 matcher = Matcher(nlp.vocab)
 
 # パターンはトークンを表す辞書のリストからなります
-pattern = [{"LEMMA": "love", "POS": "VERB"}, {"LOWER": "cats"}]
-matcher.add("LOVE_CATS", None, pattern)
+pattern = [{"LEMMA": "愛する", "POS": "VERB"}, {"LOWER": "ネコ"}]
+matcher.add("ネコを愛する", None, pattern)
 
 # 演算子は何回トークンがマッチするかを表します
-pattern = [{"TEXT": "very", "OP": "+"}, {"TEXT": "happy"}]
-matcher.add("VERY_HAPPY", None, pattern)
+pattern = [{"TEXT": "とても", "OP": "+"}, {"TEXT": "幸せ"}]
+matcher.add("とても幸せ", None, pattern)
 
 # matcherをdocに対して呼び出し、(match_id, start, end)のリストを取得
-doc = nlp("I love cats and I'm very very happy")
+doc = nlp("私はネコが大好きで、私はとてもとても幸せです")
 matches = matcher(doc)
 ```
 
@@ -81,8 +81,8 @@ matcherをdocオブジェクトに対して呼び出すと、マッチ結果の�
 
 ```python
 matcher = Matcher(nlp.vocab)
-matcher.add("DOG", None, [{"LOWER": "golden"}, {"LOWER": "retriever"}])
-doc = nlp("I have a Golden Retriever")
+matcher.add("イヌ", None, [{"LOWER": "ゴールデン"}, {"LOWER": "レトリバー"}])
+doc = nlp("私はゴールデンレトリバーを飼っています")
 
 for match_id, start, end in matcher(doc):
     span = doc[start:end]
@@ -101,14 +101,14 @@ Root head token: have
 Previous token: a DET
 ```
 
-Notes: これは「golden retriever」のルールの例です。
+Notes: これは「ゴールデンレトリバー」のルールの例です。
 
 マッチ結果をイテレートすると、マッチIDと、マッチしたスパンの開始インデックスと終了インデックスを取得でき、より詳細な情報を見ることができます。
 `Span` オブジェクトを用いると、元の文書やその他のすべてのトークン属性、モデルによって予測された特徴量にアクセスすることができます。
 
 例えば、スパンのルートトークンを取得することができます。スパンが複数のトークンで構成されている場合、これはフレーズのカテゴリを決定するトークンになります。
 例えば、「ゴールデンレトリバー」のルートは「レトリバー」です。また、このルートのヘッドトークンを取得できます。
-これはフレーズを支配する構文的な「親」であり、この場合は動詞「have」です。
+これはフレーズを支配する構文的な「親」であり、この場合は動詞「飼う」です。
 
 最後に、前のトークンとその属性をみていきます。この場合は限定詞「a」です。
 
@@ -140,9 +140,9 @@ from spacy.matcher import PhraseMatcher
 
 matcher = PhraseMatcher(nlp.vocab)
 
-pattern = nlp("Golden Retriever")
-matcher.add("DOG", None, pattern)
-doc = nlp("I have a Golden Retriever")
+pattern = nlp("ゴールデンレトリバー")
+matcher.add("イヌ", None, pattern)
+doc = nlp("私はゴールデンレトリバーを飼っています")
 
 # マッチの結果をイテレート
 for match_id, start, end in matcher(doc):
