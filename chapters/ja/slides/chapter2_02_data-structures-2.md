@@ -13,15 +13,15 @@ Notes: さて、語彙データと文字列ストアについて紹介したの�
 
 ```python
 # nlpオブジェクトを作成
-from spacy.lang.en import English
-nlp = English()
+from spacy.lang.ja import Japanese
+nlp = Japanese()
 
 # Docクラスをインポート
 from spacy.tokens import Doc
 
 # Docクラスのもととなるwordsとspacesを作成
 words = ["こんにちは", "世界", "！"]
-spaces = [True, False, False]
+spaces = [False, False, False]
 
 # docを手動で作る
 doc = Doc(nlp.vocab, words=words, spaces=spaces)
@@ -58,7 +58,7 @@ from spacy.tokens import Doc, Span
 
 # Docクラスのもととなるwordsとspacesを作成
 words = ["こんにちは", "世界", "！"]
-spaces = [True, False, False]
+spaces = [False, False, False]
 
 # docを手動で作成
 doc = Doc(nlp.vocab, words=words, spaces=spaces)
