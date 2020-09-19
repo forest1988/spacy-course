@@ -49,20 +49,22 @@ from spacy.matcher import Matcher
 matcher = Matcher(nlp.vocab)
 
 # パターンはトークンを表す辞書のリストからなります
-pattern = [{"LEMMA": "愛する", "POS": "VERB"}, {"LOWER": "ネコ"}]
-matcher.add("ネコを愛する", None, pattern)
+pattern = [{"TEXT": "ネコ"}, {"OP": "*"},{"LEMMA": "大好き", "POS": "ADJ"}]
+matcher.add("ネコ_大好き", None, pattern)
 
 # 演算子は何回トークンがマッチするかを表します
 pattern = [{"TEXT": "とても", "OP": "+"}, {"TEXT": "幸せ"}]
-matcher.add("とても幸せ", None, pattern)
+matcher.add("とても_幸せ", None, pattern)
 
 # matcherをdocに対して呼び出し、(match_id, start, end)のリストを取得
 doc = nlp("私はネコが大好きで、私はとてもとても幸せです")
+doc.is_tagged = True
 matches = matcher(doc)
 ```
 
 Notes: 前章で、spaCyのルールベースのmatcherを使って複雑なパターンを文章中から見つける方法を学びました。
 ここでは、その簡単な要約を掲載しています。
+（ただしv2.3現在、日本語モデルでは[#5802](https://github.com/explosion/spaCy/issues/5802)で指摘されているバグのため、タグの参照時にエラーとなることがあることに注意してください。ここでは `doc.is_tagged = True` としてdocにタグの情報があることを明示的に設定し、エラーを回避しています。）
 
 matcherは共有語彙データ（通常は`nlp.vocab`）によって初期化されます。
 
@@ -95,10 +97,10 @@ for match_id, start, end in matcher(doc):
 ```
 
 ```out
-Matched span: Golden Retriever
-Root token: Retriever
-Root head token: have
-Previous token: a DET
+Matched span: ゴールデンレトリバー
+Root token: レトリバー
+Root head token: 飼っ
+Previous token: は ADP
 ```
 
 Notes: これは「ゴールデンレトリバー」のルールの例です。
@@ -108,9 +110,9 @@ Notes: これは「ゴールデンレトリバー」のルールの例です。
 
 例えば、スパンのルートトークンを取得することができます。スパンが複数のトークンで構成されている場合、これはフレーズのカテゴリを決定するトークンになります。
 例えば、「ゴールデンレトリバー」のルートは「レトリバー」です。また、このルートのヘッドトークンを取得できます。
-これはフレーズを支配する構文的な「親」であり、この場合は動詞「飼う」です。
+これはフレーズを支配する構文的な「親」であり、この場合は動詞「飼っ」（「飼う」の連用形に、促音便が起こったもの）です。
 
-最後に、前のトークンとその属性をみていきます。この場合は限定詞「a」です。
+最後に、前のトークンとその属性をみていきます。この場合は助詞「は」です。
 
 ---
 
@@ -152,7 +154,7 @@ for match_id, start, end in matcher(doc):
 ```
 
 ```out
-Matched span: Golden Retriever
+Matched span: ゴールデンレトリバー
 ```
 
 Notes: 例をみていきます。
@@ -162,7 +164,7 @@ phrase matcherは`spacy.matcher`からインポートします。そして、普
 辞書のリストを渡す代わりに、`Doc`をパターンとして渡します。
 
 そして、テキスト中のマッチ結果をイテレートし、マッチIDと開始インデックス、終了インデックスを取得します。
-これによって、マッチした「Golden Retriever」の`Span`オブジェクトを作ることができ、文脈を解析できます。
+これによって、マッチした「ゴールデンレトリバー」の`Span`オブジェクトを作ることができ、文脈を解析できます。
 
 ---
 
