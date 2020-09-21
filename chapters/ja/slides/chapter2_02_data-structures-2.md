@@ -67,7 +67,7 @@ doc = Doc(nlp.vocab, words=words, spaces=spaces)
 span = Span(doc, 0, 2)
 
 # ラベルがついたスパンを作成
-span_with_label = Span(doc, 0, 2, label="挨拶")
+span_with_label = Span(doc, 0, 2, label="GREETING")
 
 # spanをdoc.entsに加える
 doc.ents = [span_with_label]
